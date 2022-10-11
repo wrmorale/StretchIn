@@ -92,14 +92,20 @@ function update() {
     if ((w1.pos.x < sTop.posX+1) && (w1.pos.x > sTop.posX-1)){
       if (w1.height > sTop.posY){
         end();
+      // If player collides, end game, otherwise if player is close to wall, add score
+      } else if ((sTop.posY - w1.height) <= 5){
+        addScore(10, sTop.posY)
       }
     }
   })
   wall2.forEach((w2) => {
     // since the w2.height is a negative value, add 100 to get the "correct" height
     if ((w2.pos.x < sBot.posX+1) && (w2.pos.x > sBot.posX-1)){
+      // If player collides, end game, otherwise if player is close to wall, add score
       if (100+w2.height < sBot.posY) {
         end();
+      } else if (((100+w2.height) - sBot.posY) <= 5){
+        addScore(10, sBot.posY)
       }
     }
   })
