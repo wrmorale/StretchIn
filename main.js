@@ -81,21 +81,26 @@ function update() {
     const isCollidingWithPlayer = (
       wall1.height > sTop.posY || wall2.height < sBot.posY
     )
-    const w1 = {pos: vec(100, 0),   width: 3, height: rnd(0,40) };
-    const w2 = {pos: vec(100, 100), width: 3, height: rnd(0, -40)};
+    const w1 = {pos: vec(100, 0),   width: 3, height: rnd(0,43) };
+    // const w2 = {pos: vec(100, 100), width: 3, height: rnd(0, -40)};
+    const w2 = {pos: vec(100, 100), width: 3, height: w1.height*-1}
     wall1.push(w1);
     wall2.push(w2);
     nextWallDist += rnd(50, 70);
   }
   wall1.forEach((w1) => {
-    if (((w1.pos.x < sTop.posX+1) && (w1.pos.x > sTop.posX-1)) && (w1.height > sTop.posY)){
-      end();
+    if ((w1.pos.x < sTop.posX+1) && (w1.pos.x > sTop.posX-1)){
+      if (w1.height > sTop.posY){
+        end();
+      }
     }
   })
   wall2.forEach((w2) => {
     // since the w2.height is a negative value, add 100 to get the "correct" height
-    if (((w2.pos.x < sBot.posX+1) && (w2.pos.x > sBot.posX-1)) && (100+w2.height < sBot.posY)){
-      end();
+    if ((w2.pos.x < sBot.posX+1) && (w2.pos.x > sBot.posX-1)){
+      if (100+w2.height < sBot.posY) {
+        end();
+      }
     }
   })
   // console.log(sTop.posY)
