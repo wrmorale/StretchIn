@@ -67,12 +67,12 @@ function update() {
   //added a cap to the max height
   if(input.isPressed && stretcher.height < 100){
     stretcher.height++;
-    sTop.posY--;
-    sBot.posY++;
+    sTop.posY -= 0.5;
+    sBot.posY += 0.5;
   }else if(stretcher.height > 5 && !input.isPressed){
     stretcher.height--;
-    sTop.posY++;
-    sBot.posY--;
+    sTop.posY += 0.5;
+    sBot.posY -= 0.5;
   }
   color("black");
   box(stretcher.posX, stretcher.posY, 1, stretcher.height);
@@ -87,6 +87,18 @@ function update() {
     wall2.push(w2);
     nextWallDist += rnd(50, 70);
   }
+  wall1.forEach((w1) => {
+    if (((w1.pos.x < sTop.posX+1) && (w1.pos.x > sTop.posX-1)) && (w1.height > sTop.posY)){
+      end();
+    }
+  })
+  wall2.forEach((w2) => {
+    // since the w2.height is a negative value, add 100 to get the "correct" height
+    if (((w2.pos.x < sBot.posX+1) && (w2.pos.x > sBot.posX-1)) && (100+w2.height < sBot.posY)){
+      end();
+    }
+  })
+  // console.log(sTop.posY)
   remove(wall1, (w1) =>{
     w1.pos.x -= scr;
     color("red");
