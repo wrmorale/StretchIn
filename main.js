@@ -1,11 +1,16 @@
 title = "StretchIn";
 
-description = "[Hold  Stretch]";
+description = `
+[Hold] Stretch
+Close to danger
+to get points
+`;
 
 characters = [];
 
 options = {
-  viewSize: { x: 100, y: 100 }
+  viewSize: { x: 100, y: 100 },
+  isPlayingBgm: true
 };
 
 /**
@@ -91,9 +96,11 @@ function update() {
   wall1.forEach((w1) => {
     if ((w1.pos.x < sTop.posX+1) && (w1.pos.x > sTop.posX-1)){
       if (w1.height > sTop.posY){
+        play("hit");
         end();
       // If player collides, end game, otherwise if player is close to wall, add score
       } else if ((sTop.posY - w1.height) <= 5){
+        play("coin");
         addScore(10, sTop.posY)
       }
     }
@@ -103,8 +110,10 @@ function update() {
     if ((w2.pos.x < sBot.posX+1) && (w2.pos.x > sBot.posX-1)){
       // If player collides, end game, otherwise if player is close to wall, add score
       if (100+w2.height < sBot.posY) {
+        play("hit");
         end();
       } else if (((100+w2.height) - sBot.posY) <= 5){
+        play("coin");
         addScore(10, sBot.posY)
       }
     }
